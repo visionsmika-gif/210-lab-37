@@ -37,10 +37,18 @@ int main() {
             break;
         }
         cout << "Hash index: " << pair.first << " - ";      // Output the hash index.
-        for (const string& s : pair.second) {               // Output all the strings corresponding with that hash index.
-            cout << s << ", ";
+        int j = 0;
+        const int NUM_PRINT = 3;
+        for (const string& s : pair.second) {               // Output the first few strings corresponding with that hash index.
+            if (j == NUM_PRINT) {
+                break;
+            }
+            cout << s << " ";
+            ++j;
         }
-        cout << "\n\n\n";
+        cout << "... (";
+        cout << pair.second.size() << " total strings)\n";
+        cout << "\n";
         ++i;
     }
 
