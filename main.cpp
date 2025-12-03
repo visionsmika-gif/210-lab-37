@@ -27,9 +27,22 @@ int main() {
     int hashIndex;
     while (getline(dataFile, str)) {
         hashIndex = gen_hash_index(str);        // Get a string's ASCII sum, which will serve as its hash index.
-        hash_table[hashIndex].push_back(str);   // Push the string to its proper "bucket," mapping it to its hash index.
+        hash_table[hashIndex].push_back(str);   // Insert the string into the list using push_back().
     }
 
+    // Display the first 100 map entries.
+    int i = 0;
+    for (const auto& pair : hash_table) {       // Iterate through each pair in the map.
+        if (i == 100) {
+            break;
+        }
+        cout << "Hash index: " << pair.first << " - ";      // Output the hash index.
+        for (const string& s : pair.second) {               // Output all the strings corresponding with that hash index.
+            cout << s << ", ";
+        }
+        cout << "\n\n\n";
+        ++i;
+    }
 
     return 0;
 }
