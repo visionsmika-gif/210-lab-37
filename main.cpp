@@ -32,23 +32,36 @@ int main() {
 
     // Display the first 100 map entries.
     int i = 0;
+    const int NUM_ENTRIES = 100;
     for (const auto& pair : hash_table) {       // Iterate through each pair in the map.
-        if (i == 100) {
+        if (i == NUM_ENTRIES) {
             break;
         }
-        cout << "Hash index: " << pair.first << " - ";      // Output the hash index.
+
+        // Output the first part of the pair: the hash index.
+        cout << "Hash index " << pair.first << " - ";
+
+        // Output the second part of the pair: the strings corresponding with that hash index.
         int j = 0;
         const int NUM_PRINT = 3;
-        for (const string& s : pair.second) {               // Output the first few strings corresponding with that hash index.
+        for (const string& s : pair.second) {
             if (j == NUM_PRINT) {
                 break;
             }
             cout << s << " ";
             ++j;
         }
+
+        // Print extra spaces for neat output.
+        if (pair.second.size() < NUM_PRINT) {
+            for (int i = 0; i < NUM_PRINT - pair.second.size(); ++i) {
+                cout << string(13, ' ');
+            }
+        }
+
+        // Since there are too many strings to print, print the total number of strings instead.
         cout << "... (";
         cout << pair.second.size() << " total strings)\n";
-        cout << "\n";
         ++i;
     }
 
