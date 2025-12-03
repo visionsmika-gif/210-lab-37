@@ -1,9 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <map>
+#include <list>
 using namespace std;
 
-int sum_ascii(const string& str);
+int gen_hash_index(const string& str);
 
 int main() {
 
@@ -16,22 +18,25 @@ int main() {
         return 1;
     }
 
+    // Declare a hash table.
+    map<int, list<string>> hash_table;      // The map's key is the hash index.
+                                            // The map's value is a list of all the strings that map to that hash index.
+
     // Read strings from the file.
     string str;
-    int grandTotal = 0;
+    int hashIndex;
     while (getline(dataFile, str)) {
-        grandTotal += sum_ascii(str);   // Add each string's ASCII values into a grand total.
+        hashIndex = gen_hash_index(str);        // Get a string's ASCII sum, which will serve as its hash index.
+        hash_table[hashIndex].push_back(str);   // Push the string to its proper "bucket," mapping it to its hash index.
     }
 
-    // Output the grand total.
-    cout << grandTotal;
 
     return 0;
 }
 
 
 // Function to receive a single string and return the sum of that string's character's ASCII values.
-int sum_ascii(const string& str) {
+int gen_hash_index(const string& str) {
     int sum = 0;
     for (char c : str) {    // Go through each character.
         sum += (int)c;      // Get each character's ASCII value, adding it to the sum.
