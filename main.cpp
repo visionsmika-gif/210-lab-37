@@ -13,6 +13,7 @@ int gen_hash_index(const string& str);
 int getMenuChoice();
 void printFirstHundred(const map<int, list<string>>& hash_table);
 void searchForKey(const map<int, list<string>>& hash_table);
+void addKey(map<int, list<string>>& hash_table);
 
 int main() {
     // Open the file.
@@ -47,7 +48,10 @@ int main() {
         else if (choice == 2) {                 // [2] Search for a key
             searchForKey(hash_table);
         }
-        else if (choice == 3) {
+        else if (choice == 3) {                 // [3] Add a key
+            addKey(hash_table);
+        }
+        else if (choice == 4) {
 
         }
 
@@ -72,16 +76,17 @@ int getMenuChoice() {
     cout << "MENU:\n";
     cout << "[1] Print the first 100 entries\n";
     cout << "[2] Search for a key\n";
-    cout << "[3] Modify a key\n";
+    cout << "[3] Add a key\n";
+    cout << "[4] Modify a key\n";
     cout << "[0] Exit\n";
 
     do {
         cout << "Choice --> ";
         cin >> choice;
-        if (choice < 0 || choice > 3) {
-            cout << "ERROR: Inavlid choice. Please enter a number from 0 to 3.\n";
+        if (choice < 0 || choice > 4) {
+            cout << "ERROR: Inavlid choice. Please enter a number from 0 to 4.\n";
         }
-    } while (choice < 0 || choice > 3);
+    } while (choice < 0 || choice > 4);
 
     return choice;
 }
@@ -147,4 +152,16 @@ void searchForKey(const map<int, list<string>>& hash_table) {
         // The "bucket" was not in the hash table
         // OR the key was not found in the "bucket."
     cout << "Key not found.\n";
+}
+
+void addKey(map<int, list<string>>& hash_table) {
+    // Prompt the user to enter a key.
+    string key;
+    cout << "Enter a key to add --> ";
+    getline(cin, key);
+
+    int hashIndex = gen_hash_index(key);    // Get the key's hash index.
+    hash_table[hashIndex].push_back(key);   // Insert the key into the list using push_back().
+
+    cout << "Key successfully added at hash index " << hashIndex << ".\n";
 }
