@@ -12,6 +12,7 @@ int gen_hash_index(const string& str);
 
 int getMenuChoice();
 void printFirstHundred(const map<int, list<string>>& hash_table);
+void searchForKey(const map<int, list<string>>& hash_table);
 
 int main() {
     // Open the file.
@@ -42,7 +43,7 @@ int main() {
         if (choice == 1) {                      // [1] Print the first 100 entries
             printFirstHundred(hash_table);
         }
-        else if (choice == 2) {                 // [2]
+        else if (choice == 2) {                 // [2] Search for a key
 
         }
         else if (choice == 3) {
@@ -50,10 +51,7 @@ int main() {
         }
 
         cout << "\n";
-    } while (choice != 0);
-
-    // Display the first 100 map entries.
-    
+    } while (choice != 0);    
 
     return 0;
 }
@@ -87,6 +85,7 @@ int getMenuChoice() {
     return choice;
 }
 
+// Function to display the first 100 map entries.
 void printFirstHundred(const map<int, list<string>>& hash_table) {
     int i = 0;
     const int NUM_ENTRIES = 100;
@@ -122,4 +121,27 @@ void printFirstHundred(const map<int, list<string>>& hash_table) {
         cout << pair.second.size() << " total string(s)\n";
         ++i;
     }
+}
+
+void searchForKey(const map<int, list<string>>& hash_table) {
+    // Prompt the user to enter a key.
+    string key;
+    cout << "Enter a key to search for --> ";
+    getline(cin, key);
+
+    // Get the key's hash index.
+    int hashIndex = gen_hash_index(key);
+
+    // Go to the correct "bucket" in the hash table, according to the hash index.
+    auto it = hash_table.find(hashIndex);
+    if (it != hash_table.end()) {               // If the "bucket" was located,
+        for (const string& s : it->second) {    // attempt to search for the key.
+            cout << "Key successfully found at hash index " << hashIndex << ".\n";
+            return;
+        }
+    }
+    // The key is not found if either:
+        // The "bucket" was not in the hash table
+        // OR the key was not found in the "bucket."
+    cout << "Key not found.\n";
 }
