@@ -8,14 +8,16 @@
 #include <list>
 using namespace std;
 
+// Function to generate a hash index for a string.
 int gen_hash_index(const string& str);
 
+// Functions for menu choices.
 int getMenuChoice();
 void printFirstHundred(const map<int, list<string>>& hash_table);
 void searchForKey(const map<int, list<string>>& hash_table);
 void addKey(map<int, list<string>>& hash_table);
 void removeKey(map<int, list<string>>& hash_table);
-void updateKey(map<int, list<string>>& hash_table);
+void modifyKey(map<int, list<string>>& hash_table);
 
 int main() {
     // Open the file.
@@ -39,29 +41,28 @@ int main() {
         hash_table[hashIndex].push_back(str);   // Insert the string into the list using push_back().
     }
 
+    // Prompt the user with a menu, allowing them to choose what to do with the hash table.
     int choice;
     do {
         choice = getMenuChoice();
         cin.ignore();
-
-        if (choice == 1) {                      // [1] Print the first 100 entries
+        if (choice == 1) {                      // [1] Print the first 100 entries.
             printFirstHundred(hash_table);
         }
-        else if (choice == 2) {                 // [2] Search for a key
+        else if (choice == 2) {                 // [2] Search for a key.
             searchForKey(hash_table);
         }
-        else if (choice == 3) {                 // [3] Add a key
+        else if (choice == 3) {                 // [3] Add a key.
             addKey(hash_table);
         }
-        else if (choice == 4) {                 // [4] Remove a key
+        else if (choice == 4) {                 // [4] Remove a key.
             removeKey(hash_table);
         }
-        else if (choice == 5) {                 // [5] Update a key
-            updateKey(hash_table);
+        else if (choice == 5) {                 // [5] Update a key.
+            modifyKey(hash_table);
         }
-
         cout << "\n";
-    } while (choice != 0);    
+    } while (choice != 0);                      // [0] Quit.
 
     return 0;
 }
@@ -75,6 +76,7 @@ int gen_hash_index(const string& str) {
     return sum;
 }
 
+// Function to display a menu to the user and return the choice they pick (an int).
 int getMenuChoice() {
     int choice;
 
@@ -137,6 +139,7 @@ void printFirstHundred(const map<int, list<string>>& hash_table) {
     }
 }
 
+// Function to search for a key in the hash table.
 void searchForKey(const map<int, list<string>>& hash_table) {
     // Prompt the user to enter a key.
     string key;
@@ -162,6 +165,7 @@ void searchForKey(const map<int, list<string>>& hash_table) {
     cout << "Key not found.\n";
 }
 
+// Function to add a key to the hash table.
 void addKey(map<int, list<string>>& hash_table) {
     // Prompt the user to enter a key.
     string key;
@@ -174,6 +178,7 @@ void addKey(map<int, list<string>>& hash_table) {
     cout << "Key successfully added at hash index " << hashIndex << ".\n";
 }
 
+// Function to remove a key from the hash table.
 void removeKey(map<int, list<string>>& hash_table) {
     // Prompt the user to enter a key.
     string key;
@@ -201,7 +206,8 @@ void removeKey(map<int, list<string>>& hash_table) {
     cout << "Key not found.\n";
 }
 
-void updateKey(map<int, list<string>>& hash_table) {
+// Function to modify a key in the hash table.
+void modifyKey(map<int, list<string>>& hash_table) {
     // Prompt the user to enter a key to update.
     string oldKey;
     cout << "Enter a key to update --> ";
@@ -217,6 +223,7 @@ void updateKey(map<int, list<string>>& hash_table) {
             if (*it2 == oldKey) {
                 it->second.erase(it2);
                 successfulRemoval = true;
+                break;
             }
         }
     }
