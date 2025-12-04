@@ -179,30 +179,18 @@ void removeKey(map<int, list<string>>& hash_table) {
 
     // Go to the correct "bucket" in the hash table, according to the hash index.
     auto it = hash_table.find(hashIndex);
-    if (it != hash_table.end()) {                                                   // If the "bucket" was located,
-        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2) {       // attempt to search for the key by iterating through the list.
+    if (it != hash_table.end()) {   // If the "bucket" was located,
+        // attempt to search for the key by iterating through the list.
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2) {
             if (*it2 == key) {
-
+                it->second.erase(it2);  // If the key was found, remove it.
                 cout << "Key successfully removed.\n";
-            }
-        }
-        
-        
-        
-        
-        
-        
-        for (const string& s : it->second) {    // attempt to search for the key.
-            if (s == key) {
-                cout << "Key successfully found at hash index " << hashIndex << ".\n";
                 return;
             }
         }
     }
-    else {
-        cout << "Key not found.\n";
-    }
-    
-    
-   
+    // The key is not found if either:
+        // The "bucket" was not in the hash table
+        // OR the key was not found in the "bucket."
+    cout << "Key not found.\n";
 }
