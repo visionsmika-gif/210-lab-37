@@ -10,6 +10,9 @@ using namespace std;
 
 int gen_hash_index(const string& str);
 
+int getMenuChoice();
+void printFirstHundred(const map<int, list<string>>& hash_table);
+
 int main() {
     // Open the file.
     const string FILE_NAME = "data.txt";
@@ -32,7 +35,59 @@ int main() {
         hash_table[hashIndex].push_back(str);   // Insert the string into the list using push_back().
     }
 
+    int choice;
+    do {
+        choice = getMenuChoice();
+
+        if (choice == 1) {                      // [1] Print the first 100 entries
+            printFirstHundred(hash_table);
+        }
+        else if (choice == 2) {                 // [2]
+
+        }
+        else if (choice == 3) {
+
+        }
+
+        cout << "\n";
+    } while (choice != 0);
+
     // Display the first 100 map entries.
+    
+
+    return 0;
+}
+
+// Function to receive a single string and return the sum of that string's characters' ASCII values.
+int gen_hash_index(const string& str) {
+    int sum = 0;
+    for (char c : str) {    // Go through each character.
+        sum += (int)c;      // Get each character's ASCII value, adding it to the sum.
+    }
+    return sum;
+}
+
+int getMenuChoice() {
+    int choice;
+
+    cout << "MENU:\n";
+    cout << "[1] Print the first 100 entries\n";
+    cout << "[2] Search for a key\n";
+    cout << "[3] Modify a key\n";
+    cout << "[0] Exit\n";
+
+    do {
+        cout << "Choice --> ";
+        cin >> choice;
+        if (choice < 0 || choice > 3) {
+            cout << "ERROR: Inavlid choice. Please enter a number from 0 to 3.\n";
+        }
+    } while (choice < 0 || choice > 3);
+
+    return choice;
+}
+
+void printFirstHundred(const map<int, list<string>>& hash_table) {
     int i = 0;
     const int NUM_ENTRIES = 100;
     for (const auto& pair : hash_table) {       // Iterate through each pair in the map.
@@ -67,15 +122,4 @@ int main() {
         cout << pair.second.size() << " total string(s)\n";
         ++i;
     }
-
-    return 0;
-}
-
-// Function to receive a single string and return the sum of that string's characters' ASCII values.
-int gen_hash_index(const string& str) {
-    int sum = 0;
-    for (char c : str) {    // Go through each character.
-        sum += (int)c;      // Get each character's ASCII value, adding it to the sum.
-    }
-    return sum;
 }
