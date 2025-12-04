@@ -14,6 +14,7 @@ int getMenuChoice();
 void printFirstHundred(const map<int, list<string>>& hash_table);
 void searchForKey(const map<int, list<string>>& hash_table);
 void addKey(map<int, list<string>>& hash_table);
+void removeKey(map<int, list<string>>& hash_table);
 
 int main() {
     // Open the file.
@@ -51,8 +52,8 @@ int main() {
         else if (choice == 3) {                 // [3] Add a key
             addKey(hash_table);
         }
-        else if (choice == 4) {
-
+        else if (choice == 4) {                 // [4] Remove a key
+            removeKey(hash_table);
         }
 
         cout << "\n";
@@ -77,16 +78,17 @@ int getMenuChoice() {
     cout << "[1] Print the first 100 entries\n";
     cout << "[2] Search for a key\n";
     cout << "[3] Add a key\n";
-    cout << "[4] Modify a key\n";
+    cout << "[4] Remove a key\n";
+    cout << "[5] Modify a key\n";
     cout << "[0] Exit\n";
 
     do {
         cout << "Choice --> ";
         cin >> choice;
-        if (choice < 0 || choice > 4) {
-            cout << "ERROR: Inavlid choice. Please enter a number from 0 to 4.\n";
+        if (choice < 0 || choice > 5) {
+            cout << "ERROR: Inavlid choice. Please enter a number from 0 to 5.\n";
         }
-    } while (choice < 0 || choice > 4);
+    } while (choice < 0 || choice > 5);
 
     return choice;
 }
@@ -164,4 +166,43 @@ void addKey(map<int, list<string>>& hash_table) {
     hash_table[hashIndex].push_back(key);   // Insert the key into the list using push_back().
 
     cout << "Key successfully added at hash index " << hashIndex << ".\n";
+}
+
+void removeKey(map<int, list<string>>& hash_table) {
+    // Prompt the user to enter a key.
+    string key;
+    cout << "Enter a key to remove --> ";
+    getline(cin, key);
+
+    // Get the key's hash index.
+    int hashIndex = gen_hash_index(key);
+
+    // Go to the correct "bucket" in the hash table, according to the hash index.
+    auto it = hash_table.find(hashIndex);
+    if (it != hash_table.end()) {                                                   // If the "bucket" was located,
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2) {       // attempt to search for the key by iterating through the list.
+            if (*it2 == key) {
+
+                cout << "Key successfully removed.\n";
+            }
+        }
+        
+        
+        
+        
+        
+        
+        for (const string& s : it->second) {    // attempt to search for the key.
+            if (s == key) {
+                cout << "Key successfully found at hash index " << hashIndex << ".\n";
+                return;
+            }
+        }
+    }
+    else {
+        cout << "Key not found.\n";
+    }
+    
+    
+   
 }
