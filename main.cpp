@@ -15,6 +15,7 @@ void printFirstHundred(const map<int, list<string>>& hash_table);
 void searchForKey(const map<int, list<string>>& hash_table);
 void addKey(map<int, list<string>>& hash_table);
 void removeKey(map<int, list<string>>& hash_table);
+void updateKey(map<int, list<string>>& hash_table);
 
 int main() {
     // Open the file.
@@ -54,6 +55,9 @@ int main() {
         }
         else if (choice == 4) {                 // [4] Remove a key
             removeKey(hash_table);
+        }
+        else if (choice == 5) {                 // [5] Update a key
+            updateKey(hash_table);
         }
 
         cout << "\n";
@@ -97,7 +101,9 @@ int getMenuChoice() {
 void printFirstHundred(const map<int, list<string>>& hash_table) {
     int i = 0;
     const int NUM_ENTRIES = 100;
-    for (const auto& pair : hash_table) {       // Iterate through each pair in the map.
+
+    // Iterate through each pair in the map.
+    for (const auto& pair : hash_table) {
         if (i == NUM_ENTRIES) {
             break;
         }
@@ -193,4 +199,40 @@ void removeKey(map<int, list<string>>& hash_table) {
         // The "bucket" was not in the hash table
         // OR the key was not found in the "bucket."
     cout << "Key not found.\n";
+}
+
+void updateKey(map<int, list<string>>& hash_table) {
+    // Prompt the user to enter a key to update.
+    string oldKey;
+    cout << "Enter a key to update --> ";
+    getline(cin, oldKey);
+    
+    // Remove the old key.
+    int oldHashIndex = gen_hash_index(oldKey);
+
+    bool successfulRemoval = false;
+    auto it = hash_table.find(oldHashIndex);
+    if (it != hash_table.end()) {
+        for (auto it2 = it->second.begin(); it2 != it->second.end(); ++it2) {
+            if (*it2 == oldKey) {
+                it->second.erase(it2);
+                successfulRemoval = true;
+            }
+        }
+    }
+    if (!successfulRemoval) {
+        cout << "Key not found. Nothing updated.\n";
+        return;
+    }
+
+    // Prompt the user for a new key.
+    string newKey;
+    cout << "Enter the new key --> ";
+    getline(cin, newKey);
+
+    // Add the new key.
+    int newHashIndex = gen_hash_index(newKey);    // Get the key's hash index.
+    hash_table[newHashIndex].push_back(newKey);   // Insert the key into the list using push_back().
+
+    cout << "Key successfully updated.\n";
 }
