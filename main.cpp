@@ -39,12 +39,13 @@ int main() {
     int choice;
     do {
         choice = getMenuChoice();
+        cin.ignore();
 
         if (choice == 1) {                      // [1] Print the first 100 entries
             printFirstHundred(hash_table);
         }
         else if (choice == 2) {                 // [2] Search for a key
-
+            searchForKey(hash_table);
         }
         else if (choice == 3) {
 
@@ -136,8 +137,10 @@ void searchForKey(const map<int, list<string>>& hash_table) {
     auto it = hash_table.find(hashIndex);
     if (it != hash_table.end()) {               // If the "bucket" was located,
         for (const string& s : it->second) {    // attempt to search for the key.
-            cout << "Key successfully found at hash index " << hashIndex << ".\n";
-            return;
+            if (s == key) {
+                cout << "Key successfully found at hash index " << hashIndex << ".\n";
+                return;
+            }
         }
     }
     // The key is not found if either:
