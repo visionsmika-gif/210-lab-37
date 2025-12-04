@@ -71,7 +71,7 @@ int main() {
 int gen_hash_index(const string& str) {
     int sum = 0;
     for (char c : str) {    // Go through each character.
-        sum += (int)c;      // Get each character's ASCII value, adding it to the sum.
+        sum += (int)c;      // Add each character's ASCII value to the sum.
     }
     return sum;
 }
@@ -87,7 +87,8 @@ int getMenuChoice() {
     cout << "[4] Remove a key\n";
     cout << "[5] Modify a key\n";
     cout << "[0] Exit\n";
-
+    
+    // Validate the user's choice.
     do {
         cout << "Choice --> ";
         cin >> choice;
@@ -124,7 +125,7 @@ void printFirstHundred(const map<int, list<string>>& hash_table) {
             ++j;
         }
 
-        // Print extra spaces for neatly aligned output.
+        // Print extra spaces for neater output.
         const int STRING_SIZE = 12;
         if (pair.second.size() < NUM_PRINT) {
             for (int i = 0; i < NUM_PRINT - pair.second.size(); ++i) {
@@ -159,7 +160,7 @@ void searchForKey(const map<int, list<string>>& hash_table) {
             }
         }
     }
-    // The key is not found if either:
+    // The key was not found if either:
         // The "bucket" was not in the hash table
         // OR the key was not found in the "bucket."
     cout << "Key not found.\n";
@@ -213,7 +214,7 @@ void modifyKey(map<int, list<string>>& hash_table) {
     cout << "Enter a key to update --> ";
     getline(cin, oldKey);
     
-    // Remove the old key.
+    // Try to remove the old key.
     int oldHashIndex = gen_hash_index(oldKey);
 
     bool successfulRemoval = false;
